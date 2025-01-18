@@ -8,7 +8,7 @@ namespace Vending_Machine
 {
     internal class VendOptions
     {
-        private string[] Options = { "Cancel", "Beverage", "Snack", "Meal" };
+        private string[] _Options = { "Cancel", "Beverage", "Snack", "Meal" };
         public VendOptions()
         {
 
@@ -19,7 +19,11 @@ namespace Vending_Machine
         }
         public string Option(int choice)
         {
-            return Options[choice];
+            return _Options[choice];
+        }
+        public int Count()
+        {
+            return _Options.Length;
         }
     }
 }
