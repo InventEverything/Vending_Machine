@@ -13,14 +13,17 @@ namespace Vending_Machine
         {
 
         }
+        //returns the input value as a string
         public string Number(int choice)
         {
             return choice.ToString();
         }
+        //returns choice associated with the input value
         public string Option(int choice)
         {
             return _Options[choice];
         }
+        //returns the number of choices
         public int Count()
         {
             return _Options.Length;

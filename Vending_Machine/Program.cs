@@ -14,6 +14,7 @@
                     "(" + Vend.Number(3) + ") " + Vend.Option(3) + " \n" +
                     "(" + Vend.Number(0) + ") " + Vend.Option(0) + " \n");
                 UserInput = Console.ReadKey().Key;
+                //valid response
                 if (CheckValidInput(UserInput, Vend))
                 {
                     Console.Clear();
@@ -27,24 +28,26 @@
                         Console.WriteLine("Here is your " + Vend.Option(int.Parse(((char)UserInput).ToString())) + "\n");
                     }
                 }
+                //invalid response
                 else
                 {
                     Console.Clear();
                     Console.WriteLine("Invalid input\n");
                 }
             } while (true);
-            static bool CheckValidInput(ConsoleKey input, VendOptions quantity)
+        }
+        //validates that a input is within the range of options
+        static bool CheckValidInput(ConsoleKey input, VendOptions quantity)
+        {
+            int number;
+            if (int.TryParse(((char)input).ToString(), out number))
             {
-                int number;
-                if (int.TryParse(((char)input).ToString(), out number))
+                if (number <= quantity.Count() - 1)
                 {
-                    if (number <= quantity.Count() - 1)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
-                return false;
             }
+            return false;
         }
     }
 }
