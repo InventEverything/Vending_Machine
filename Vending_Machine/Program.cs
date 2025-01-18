@@ -5,13 +5,14 @@
         static void Main(string[] args)
         {
             ConsoleKey UserInput = ConsoleKey.None;
+            VendOptions Vend = new VendOptions();
             do
             {
                 Console.WriteLine("Please press a number to make a selection: \n" +
-                    "(1) Beverage \n" +
-                    "(2) Snack \n" +
-                    "(3) Meal \n" +
-                    "(4) Refund \n");
+                    "(" + Vend.Number(1) + ") " + Vend.Option(1) + " \n" +
+                    "(" + Vend.Number(2) + ") " + Vend.Option(2) + " \n" +
+                    "(" + Vend.Number(3) + ") " + Vend.Option(3) + " \n" +
+                    "(" + Vend.Number(0) + ") " + Vend.Option(0) + " \n");
                 UserInput = Console.ReadKey().Key;
                 Console.Clear();
             } while (true);
