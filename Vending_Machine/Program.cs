@@ -12,6 +12,10 @@
                     "(" + Vend.Number(1) + ") " + Vend.Option(1) + " \n" +
                     "(" + Vend.Number(2) + ") " + Vend.Option(2) + " \n" +
                     "(" + Vend.Number(3) + ") " + Vend.Option(3) + " \n" +
+                    "(" + Vend.Number(4) + ") " + Vend.Option(4) + " \n" +
+                    "(" + Vend.Number(5) + ") " + Vend.Option(5) + " \n" +
+                    "(" + Vend.Number(6) + ") " + Vend.Option(6) + " \n" +
+                    "(" + Vend.Number(7) + ") " + Vend.Option(7) + " \n" +
                     "(" + Vend.Number(0) + ") " + Vend.Option(0) + " \n");
                 UserInput = Console.ReadKey().Key;
                 //valid response
