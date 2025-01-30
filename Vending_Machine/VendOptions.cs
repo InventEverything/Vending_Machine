@@ -8,7 +8,7 @@ namespace Vending_Machine
 {
     internal class VendOptions
     {
-        private string[] _Options = { "Cancel", "Beverage", "Snack", "Meal" };
+        private string[] _Options = { "Cancel", "Beverage", "Snack", "Meal", "Medicine", "Supply", "Resource", "Toy"};
         public VendOptions()
         {
 
