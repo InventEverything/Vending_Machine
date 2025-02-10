@@ -60,5 +60,38 @@
             string FilePath = Path.Combine(DocPath, "VendingReport.txt");
             return FilePath;
         }
+
+        static void WriteHeadOfReport(string FilePath) 
+        {
+            DateTime Date = DateTime.Now;
+
+            using (StreamWriter SW = new StreamWriter(FilePath, true)) 
+            {
+                SW.WriteLine();
+                SW.Write("Date: " + Date.ToString("D"));
+                SW.WriteLine("     Time: " + Date.ToString("t"));
+                SW.WriteLine();
+            }
+        }
+
+        static void WriteEndOfReport(string FilePath, int SoldCount) 
+        {
+            using (StreamWriter SW = new StreamWriter(FilePath, true)) 
+            {
+                SW.WriteLine();
+                SW.WriteLine("Items Sold: " + SoldCount);
+                SW.WriteLine("________________");
+            }
+        }
+
+        static void WriteBodyOfReport(string FilePath, string Item) 
+        {
+            DateTime Time = DateTime.Now;
+
+            using (StreamWriter SW = new StreamWriter(FilePath, true)) 
+            {
+                SW.WriteLine(Item + " " + Time.ToString("T"));
+            }
+        }
     }
 }
