@@ -53,5 +53,12 @@
             }
             return false;
         }
+
+        static string GenerateFilePath() 
+        {
+            string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string FilePath = Path.Combine(DocPath, "VendingReport.txt");
+            return FilePath;
+        }
     }
 }
