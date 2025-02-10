@@ -17,7 +17,7 @@
                     "(" + Vend.Number(6) + ") " + Vend.Option(6) + " \n" +
                     "(" + Vend.Number(7) + ") " + Vend.Option(7) + " \n" +
                     "(" + Vend.Number(0) + ") " + Vend.Option(0) + " \n");
-                UserInput = Console.ReadKey().Key;
+                UserInput = Console.ReadKey(true).Key;
                 //valid response
                 if (CheckValidInput(UserInput, Vend))
                 {
