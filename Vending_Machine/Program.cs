@@ -93,5 +93,27 @@
                 SW.WriteLine(Item + " " + Time.ToString("T"));
             }
         }
+
+        static string GetReport(string FilePath) 
+        {
+            string Report = string.Empty;
+
+            using (StreamReader SR = new StreamReader(FilePath)) 
+            {
+                Report = SR.ReadToEnd();
+            }
+
+            return Report;
+        }
+
+        static void DisplayVendingReport(string FilePath) 
+        {
+            string VendingReport = string.Empty;
+
+            VendingReport = GetReport(FilePath);
+            Console.Clear();
+            Console.WriteLine("************* Vending Report *************");
+            Console.WriteLine(VendingReport);
+        }
     }
 }
