@@ -6,6 +6,12 @@
         {
             ConsoleKey UserInput = ConsoleKey.None;
             VendOptions Vend = new VendOptions();
+            string FilePath = string.Empty;
+            int SoldCount = 0;
+
+            FilePath = GenerateFilePath();
+            WriteHeadOfReport(FilePath);
+
             do
             {
                 Console.WriteLine("Please press a number to make a selection: \n" +
@@ -24,12 +30,20 @@
                     Console.Clear();
                     if (UserInput == ConsoleKey.D0)
                     {
+                        WriteEndOfReport(FilePath, SoldCount);
                         Console.WriteLine("Please come again!");
+                        Console.WriteLine();
+                        Console.WriteLine("Press any key to display the vending report");
+                        Console.ReadKey();
+                        DisplayVendingReport(FilePath);
                         Environment.Exit(0);
                     }
                     else
                     {
-                        Console.WriteLine("Here is your " + Vend.Option(int.Parse(((char)UserInput).ToString())) + "\n");
+                        string ItemSold = Vend.Option(int.Parse(((char)UserInput).ToString()));
+                        SoldCount++;
+                        WriteBodyOfReport(FilePath, ItemSold);
+                        Console.WriteLine("Here is your " + ItemSold + "\n");
                     }
                 }
                 //invalid response
@@ -80,7 +94,7 @@
             {
                 SW.WriteLine();
                 SW.WriteLine("Items Sold: " + SoldCount);
-                SW.WriteLine("________________");
+                SW.WriteLine("_______________");
             }
         }
 
@@ -112,7 +126,7 @@
 
             VendingReport = GetReport(FilePath);
             Console.Clear();
-            Console.WriteLine("************* Vending Report *************");
+            Console.WriteLine("****************** Vending Report ******************");
             Console.WriteLine(VendingReport);
         }
     }
