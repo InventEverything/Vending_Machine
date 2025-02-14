@@ -6,6 +6,12 @@
         {
             ConsoleKey UserInput = ConsoleKey.None;
             VendOptions Vend = new VendOptions();
+            string FilePath = string.Empty;
+            int SoldCount = 0;
+
+            FilePath = GenerateFilePath();
+            WriteHeadOfReport(FilePath);
+
             do
             {
                 Console.WriteLine("Please press a number to make a selection: \n" +
@@ -17,19 +23,27 @@
                     "(" + Vend.Number(6) + ") " + Vend.Option(6) + " \n" +
                     "(" + Vend.Number(7) + ") " + Vend.Option(7) + " \n" +
                     "(" + Vend.Number(0) + ") " + Vend.Option(0) + " \n");
-                UserInput = Console.ReadKey().Key;
+                UserInput = Console.ReadKey(true).Key;
                 //valid response
                 if (CheckValidInput(UserInput, Vend))
                 {
                     Console.Clear();
                     if (UserInput == ConsoleKey.D0)
                     {
+                        WriteEndOfReport(FilePath, SoldCount);
                         Console.WriteLine("Please come again!");
+                        Console.WriteLine();
+                        Console.WriteLine("Press any key to display the vending report");
+                        Console.ReadKey();
+                        DisplayVendingReport(FilePath);
                         Environment.Exit(0);
                     }
                     else
                     {
-                        Console.WriteLine("Here is your " + Vend.Option(int.Parse(((char)UserInput).ToString())) + "\n");
+                        string ItemSold = Vend.Option(int.Parse(((char)UserInput).ToString()));
+                        SoldCount++;
+                        WriteBodyOfReport(FilePath, ItemSold);
+                        Console.WriteLine("Here is your " + ItemSold + "\n");
                     }
                 }
                 //invalid response
@@ -52,6 +66,68 @@
                 }
             }
             return false;
+        }
+
+        static string GenerateFilePath() 
+        {
+            string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string FilePath = Path.Combine(DocPath, "VendingReport.txt");
+            return FilePath;
+        }
+
+        static void WriteHeadOfReport(string FilePath) 
+        {
+            DateTime Date = DateTime.Now;
+
+            using (StreamWriter SW = new StreamWriter(FilePath, true)) 
+            {
+                SW.WriteLine();
+                SW.Write("Date: " + Date.ToString("D"));
+                SW.WriteLine("     Time: " + Date.ToString("t"));
+                SW.WriteLine();
+            }
+        }
+
+        static void WriteEndOfReport(string FilePath, int SoldCount) 
+        {
+            using (StreamWriter SW = new StreamWriter(FilePath, true)) 
+            {
+                SW.WriteLine();
+                SW.WriteLine("Items Sold: " + SoldCount);
+                SW.WriteLine("_______________");
+            }
+        }
+
+        static void WriteBodyOfReport(string FilePath, string Item) 
+        {
+            DateTime Time = DateTime.Now;
+
+            using (StreamWriter SW = new StreamWriter(FilePath, true)) 
+            {
+                SW.WriteLine(Item + " " + Time.ToString("T"));
+            }
+        }
+
+        static string GetReport(string FilePath) 
+        {
+            string Report = string.Empty;
+
+            using (StreamReader SR = new StreamReader(FilePath)) 
+            {
+                Report = SR.ReadToEnd();
+            }
+
+            return Report;
+        }
+
+        static void DisplayVendingReport(string FilePath) 
+        {
+            string VendingReport = string.Empty;
+
+            VendingReport = GetReport(FilePath);
+            Console.Clear();
+            Console.WriteLine("****************** Vending Report ******************");
+            Console.WriteLine(VendingReport);
         }
     }
 }
