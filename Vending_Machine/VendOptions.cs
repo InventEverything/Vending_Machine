@@ -9,9 +9,13 @@ namespace Vending_Machine
     internal class VendOptions
     {
         private string[] _Options = { "Cancel", "Beverage", "Snack", "Meal", "Medicine", "Supply", "Resource", "Toy"};
+        private int[] _Inventory;
         public VendOptions()
         {
-
+            for(int i=0; i< _Options.Length; i++)
+            {
+                _Inventory[i] = 0;
+            }
         }
         //returns the input value as a string
         public string Number(int choice)
