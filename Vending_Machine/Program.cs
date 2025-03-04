@@ -6,10 +6,10 @@
         {
             ConsoleKey UserInput = ConsoleKey.None;
             VendOptions Vend = new VendOptions();
-            string FilePath = string.Empty;
+            string FilePath = GenerateFilePath("VendingReport.txt");
+            string Inventory = GenerateFilePath("Inventory.txt");
             int SoldCount = 0;
 
-            FilePath = GenerateFilePath();
             WriteHeadOfReport(FilePath);
 
             do
@@ -68,10 +68,10 @@
             return false;
         }
 
-        static string GenerateFilePath() 
+        static string GenerateFilePath(string FileName) 
         {
-            string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string FilePath = Path.Combine(DocPath, "VendingReport.txt");
+            string DocPath = Environment.CurrentDirectory;
+            string FilePath = Path.Combine(DocPath, FileName);
             return FilePath;
         }
 
