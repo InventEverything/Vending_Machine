@@ -14,15 +14,15 @@
 
             do
             {
-                Console.WriteLine("Please press a number to make a selection: \n" +
-                    "(" + Vend.Number(1) + ") " + Vend.Option(1) + " \n" +
-                    "(" + Vend.Number(2) + ") " + Vend.Option(2) + " \n" +
-                    "(" + Vend.Number(3) + ") " + Vend.Option(3) + " \n" +
-                    "(" + Vend.Number(4) + ") " + Vend.Option(4) + " \n" +
-                    "(" + Vend.Number(5) + ") " + Vend.Option(5) + " \n" +
-                    "(" + Vend.Number(6) + ") " + Vend.Option(6) + " \n" +
-                    "(" + Vend.Number(7) + ") " + Vend.Option(7) + " \n" +
-                    "(" + Vend.Number(0) + ") " + Vend.Option(0) + " \n");
+                Console.WriteLine("Please press a number to make a selection: \n");
+
+                for (int i = 1; i < (Vend.Count()); i++)
+                {
+                    Console.WriteLine("(" + Vend.Number(i) + ") " + Vend.Option(i));
+                }
+
+                Console.WriteLine("(" + Vend.Number(0) + ") " + Vend.Option(0));
+
                 UserInput = Console.ReadKey(true).Key;
                 //valid response
                 if (CheckValidInput(UserInput, Vend))
