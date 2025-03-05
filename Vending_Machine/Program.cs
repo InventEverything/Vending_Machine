@@ -69,7 +69,7 @@
             {
                 for (int i = 0; i < Machine.Count(); i++)
                 {
-                    sw.WriteLine(Machine.Remaining(i));
+                    sw.WriteLine(Machine.Remaining(i)+":"+Machine.Option(i));
                 }
             }
         }
