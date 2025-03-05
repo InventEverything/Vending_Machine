@@ -5,24 +5,24 @@
         static void Main(string[] args)
         {
             ConsoleKey UserInput = ConsoleKey.None;
-            VendOptions Vend = new VendOptions();
-            string FilePath = string.Empty;
+            string FilePath = GenerateFilePath("VendingReport.txt");
+            string Inventory = GenerateFilePath("Inventory.txt");
+            VendOptions Vend = new VendOptions(Inventory);
             int SoldCount = 0;
 
-            FilePath = GenerateFilePath();
             WriteHeadOfReport(FilePath);
 
             do
             {
-                Console.WriteLine("Please press a number to make a selection: \n" +
-                    "(" + Vend.Number(1) + ") " + Vend.Option(1) + " \n" +
-                    "(" + Vend.Number(2) + ") " + Vend.Option(2) + " \n" +
-                    "(" + Vend.Number(3) + ") " + Vend.Option(3) + " \n" +
-                    "(" + Vend.Number(4) + ") " + Vend.Option(4) + " \n" +
-                    "(" + Vend.Number(5) + ") " + Vend.Option(5) + " \n" +
-                    "(" + Vend.Number(6) + ") " + Vend.Option(6) + " \n" +
-                    "(" + Vend.Number(7) + ") " + Vend.Option(7) + " \n" +
-                    "(" + Vend.Number(0) + ") " + Vend.Option(0) + " \n");
+                Console.WriteLine("Please press a number to make a selection: \n");
+
+                for (int i = 1; i < (Vend.Count()); i++)
+                {
+                    Console.WriteLine("(" + Vend.Number(i) + ") " + Vend.Option(i) + "\t\tInventory: " + Vend.Remaining(i));
+                }
+
+                Console.WriteLine("(" + Vend.Number(0) + ") " + Vend.Option(0));
+
                 UserInput = Console.ReadKey(true).Key;
                 //valid response
                 if (CheckValidInput(UserInput, Vend))
@@ -36,14 +36,23 @@
                         Console.WriteLine("Press any key to display the vending report");
                         Console.ReadKey();
                         DisplayVendingReport(FilePath);
+                        //Adds stock anytime the customer leaves the vending machine
+                        Vend.Restock();
+                        RecordInventory(Inventory, Vend);
                         Environment.Exit(0);
+                    }
+                    else if (Vend.Remaining(int.Parse(((char)UserInput).ToString()))>=1)
+                    {
+                        string ItemSold = Vend.Option(int.Parse(((char)UserInput).ToString()));
+                        int remaining = Vend.VendItem(int.Parse(((char)UserInput).ToString()));
+                        SoldCount++;
+                        WriteBodyOfReport(FilePath, ItemSold);
+                        Console.WriteLine("Here is your " + ItemSold + ". (Remaining: " + remaining + ")\n");
                     }
                     else
                     {
-                        string ItemSold = Vend.Option(int.Parse(((char)UserInput).ToString()));
-                        SoldCount++;
-                        WriteBodyOfReport(FilePath, ItemSold);
-                        Console.WriteLine("Here is your " + ItemSold + "\n");
+                        string ItemRequested = Vend.Option(int.Parse(((char)UserInput).ToString()));
+                        Console.WriteLine("Sorry, " + ItemRequested + " is out of stock.");
                     }
                 }
                 //invalid response
@@ -54,6 +63,17 @@
                 }
             } while (true);
         }
+        static void RecordInventory(string FileName, VendOptions Machine)
+        {
+            using (StreamWriter sw = new StreamWriter(FileName))
+            {
+                for (int i = 0; i < Machine.Count(); i++)
+                {
+                    sw.WriteLine(Machine.Remaining(i));
+                }
+            }
+        }
+
         //validates that a input is within the range of options
         static bool CheckValidInput(ConsoleKey input, VendOptions quantity)
         {
@@ -68,10 +88,10 @@
             return false;
         }
 
-        static string GenerateFilePath() 
+        static string GenerateFilePath(string FileName) 
         {
-            string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string FilePath = Path.Combine(DocPath, "VendingReport.txt");
+            string DocPath = Environment.CurrentDirectory;
+            string FilePath = Path.Combine(DocPath, FileName);
             return FilePath;
         }
 
