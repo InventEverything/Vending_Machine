@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml;
+using Newtonsoft.Json;
 
 namespace Vending_Machine
 {
-    internal class VendOptions
+    public class VendOptions
     {
         private string[] _Options = { "Cancel", "Beverage", "Snack", "Meal", "Medicine", "Supply", "Resource", "Dog Toy"};
         private IEnumerable<string> _InventoryByLine;
         private string[] _Inventory;
         private int[] _InventoryCount;
         int i = 0;
+        private Product[] _Product;
         public VendOptions(string inventory)
         {
             _InventoryByLine = File.ReadAllLines(inventory);
@@ -24,6 +28,21 @@ namespace Vending_Machine
                 _InventoryCount[i] = int.Parse(item.Split(":")[0]);
                 i++;
             }
+            _Product = new Product[_Options.Length];
+            for (int i = 0; i < _Options.Length; i++)
+            {
+                _Product[i] = new Product
+                {
+                    Name = _Options[i],
+                    Count = _InventoryCount[i]
+                };
+            }
+            Json(_Product);
+        }
+        public void Json(Product[] product)
+        {
+            string json = JsonConvert.SerializeObject(product, Newtonsoft.Json.Formatting.Indented);
+            //Console.WriteLine(json);
         }
         //returns the input value as a string
         public string Number(int choice)
