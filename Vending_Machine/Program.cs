@@ -7,7 +7,8 @@
             ConsoleKey UserInput = ConsoleKey.None;
             string FilePath = GenerateFilePath("VendingReport.txt");
             string Inventory = GenerateFilePath("Inventory.txt");
-            VendOptions Vend = new VendOptions(Inventory);
+            string InventoryJson = CheckInventory(Inventory);
+            VendOptions Vend = new VendOptions(InventoryJson);
             int SoldCount = 0;
 
             WriteHeadOfReport(FilePath);
@@ -18,10 +19,10 @@
 
                 for (int i = 1; i < (Vend.Count()); i++)
                 {
-                    Console.WriteLine("(" + Vend.Number(i) + ") " + Vend.Option(i) + "\t\tInventory: " + Vend.Remaining(i));
+                    Console.WriteLine("(" + i + ") " + Vend.Option(i) + "\t\tInventory: " + Vend.Remaining(i));
                 }
 
-                Console.WriteLine("(" + Vend.Number(0) + ") " + Vend.Option(0));
+                Console.WriteLine("(0) " + Vend.Option(0));
 
                 UserInput = Console.ReadKey(true).Key;
                 //valid response
@@ -67,10 +68,14 @@
         {
             using (StreamWriter sw = new StreamWriter(FileName))
             {
-                for (int i = 0; i < Machine.Count(); i++)
-                {
-                    sw.WriteLine(Machine.Remaining(i)+":"+Machine.Option(i));
-                }
+                sw.WriteLine(Machine.Json());
+            }
+        }
+        static string CheckInventory(string inventory)
+        {
+            using (StreamReader sr = new StreamReader(inventory))
+            {
+                return sr.ReadToEnd();
             }
         }
 

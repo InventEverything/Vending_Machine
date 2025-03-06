@@ -11,69 +11,41 @@ namespace Vending_Machine
 {
     public class VendOptions
     {
-        private string[] _Options = { "Cancel", "Beverage", "Snack", "Meal", "Medicine", "Supply", "Resource", "Dog Toy"};
-        private IEnumerable<string> _InventoryByLine;
-        private string[] _Inventory;
-        private int[] _InventoryCount;
-        int i = 0;
-        private Product[] _Product;
+        private List<Product> _Product;
+
         public VendOptions(string inventory)
         {
-            _InventoryByLine = File.ReadAllLines(inventory);
-            _Inventory = new string[_Options.Length];
-            _InventoryCount = new int[_Options.Length];
-            foreach (var item in _InventoryByLine)
-            {
-                _Inventory[i] = _Options[i] + ":" + item.Split(":")[0];
-                _InventoryCount[i] = int.Parse(item.Split(":")[0]);
-                i++;
-            }
-            _Product = new Product[_Options.Length];
-            for (int i = 0; i < _Options.Length; i++)
-            {
-                _Product[i] = new Product
-                {
-                    Name = _Options[i],
-                    Count = _InventoryCount[i]
-                };
-            }
-            Json(_Product);
+            _Product = JsonConvert.DeserializeObject<List<Product>>(inventory);
         }
-        public void Json(Product[] product)
+        public string Json()
         {
-            string json = JsonConvert.SerializeObject(product, Newtonsoft.Json.Formatting.Indented);
-            //Console.WriteLine(json);
-        }
-        //returns the input value as a string
-        public string Number(int choice)
-        {
-            return choice.ToString();
+            return JsonConvert.SerializeObject(_Product);
         }
         //returns choice associated with the input value
         public string Option(int choice)
         {
-            return _Options[choice];
+            return _Product.ToArray()[choice].Name;
         }
         //returns the number of choices
         public int Count()
         {
-            return _Options.Length;
+            return _Product.Count;
         }
         public int Remaining(int choice)
         {
-            return _InventoryCount[choice];
+            return  _Product[choice].Count;
         }
         public int VendItem(int choice)
         {
-            if(_InventoryCount[choice]>=1)
-            _InventoryCount[choice]--;
+            if (_Product[choice].Count >= 1)
+                _Product[choice].Count--;
             return Remaining(choice);
         }
         public void Restock()
         {
-            for(int i =0;  i < _InventoryCount.Length; i++)
+            for(int i =0;  i < _Product.Count; i++)
             {
-                _InventoryCount[i]++;
+                _Product[i].Count++;
             }
         }
     }
