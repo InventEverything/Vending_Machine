@@ -82,7 +82,7 @@
             }
             else
             {
-                return "";
+                return "[\r\n  {\r\n    \"Id\": 0,\r\n    \"Name\": \"Cancel\",\r\n    \"Count\": 0\r\n  },\r\n  {\r\n    \"Id\": 1,\r\n    \"Name\": \"Beverage\",\r\n    \"count\": 5\r\n  },\r\n  {\r\n    \"Id\": 2,\r\n    \"Name\": \"Snack\",\r\n    \"count\": 5\r\n  },\r\n  {\r\n    \"Id\": 3,\r\n    \"Name\": \"Meal\",\r\n    \"count\": 5\r\n  },\r\n  {\r\n    \"Id\": 4,\r\n    \"Name\": \"Medicine\",\r\n    \"count\": 5\r\n  },\r\n  {\r\n    \"Id\": 5,\r\n    \"Name\": \"Supply\",\r\n    \"count\": 5\r\n  },\r\n  {\r\n    \"Id\": 6,\r\n    \"Name\": \"Resource\",\r\n    \"Count\": 5\r\n  },\r\n  {\r\n    \"Id\": 7,\r\n    \"Name\": \"Dog Toy\",\r\n    \"Count\": 5\r\n  }\r\n]\r\n";
             }
         }
 
