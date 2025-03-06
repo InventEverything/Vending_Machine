@@ -73,9 +73,16 @@
         }
         static string CheckInventory(string inventory)
         {
-            using (StreamReader sr = new StreamReader(inventory))
+            if (File.Exists(inventory))
             {
-                return sr.ReadToEnd();
+                using (StreamReader sr = new StreamReader(inventory))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
+            else
+            {
+                return "";
             }
         }
 
