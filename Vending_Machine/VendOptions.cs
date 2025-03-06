@@ -19,7 +19,7 @@ namespace Vending_Machine
         }
         public string Json()
         {
-            return JsonConvert.SerializeObject(_Product);
+            return JsonConvert.SerializeObject(_Product, Newtonsoft.Json.Formatting.Indented);
         }
         //returns choice associated with the input value
         public string Option(int choice)
